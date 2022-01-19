@@ -41,6 +41,7 @@ class SiteController extends Controller
     }
 
     /**
+     * Устарело
      * Возвращает список ИД ОН аренды (квартиры + комнаты)
      *
      * Вызов:
@@ -62,6 +63,7 @@ class SiteController extends Controller
     }
 
     /**
+     * * Устарело
      * Возвращает количество ОН аренды (квартиры + комнаты)
      *
      * Вызов:

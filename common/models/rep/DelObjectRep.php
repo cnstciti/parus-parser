@@ -11,7 +11,6 @@ use common\models\ar\DelObjectAR;
  */
 class DelObjectRep
 {
-    //const ID = 1;
 
     public static function findOne($id)
     {
@@ -26,6 +25,14 @@ class DelObjectRep
         } else {
             $row->lastId = 0;
         }
+        $row->save();
+    }
+
+    public static function initRow(int $id, int $value) : void
+    {
+        $row         = self::findOne($id);
+        $row->lastId = $value;
+        $row->start  = $value;
         $row->save();
     }
 

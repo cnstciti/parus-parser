@@ -21,7 +21,7 @@ class DataLevel3Controller extends Controller
     }
 
     /**
-     * Действие "Level3 - Обогащение данных"
+     * Действие "Level3 - Запустить парсер"
      *
      * @return mixed
      */
@@ -34,6 +34,11 @@ class DataLevel3Controller extends Controller
         ]);
     }
 
+    /**
+     * Действие "Level3 - Запустить удаление объекта"
+     *
+     * @return mixed
+     */
     public function actionDelete()
     {
         $data = DataLevel3::delete(7);
@@ -42,30 +47,19 @@ class DataLevel3Controller extends Controller
             'data' => $data,
         ]);
     }
-/*
-    public function actionVsn()
+
+    /**
+     * Действие "Level3 - Запустить инициацию удаления объекта"
+     *
+     * @return mixed
+     */
+    public function actionInitDelete()
     {
-        $url = 'https://podolsk.vsn.ru/p-kuznechiki/for-rent-flat/one-room/45191939-40-0-m-etazh-13-14-27000-rub-ul-akademika-dollezhalya-14';
-        $dataResult = DataResultRep::_findByUrl($url);
-        $userAgent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13';
+        $data = DataLevel3::initDelete();
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        $content = curl_exec($ch);
-        curl_close($ch);
-        $document = new Document($content);
-
-        $data = DataLevel3Vsn::parser($document, $dataResult);
-
-        return $this->render('data', [
+        return $this->render('init-delete', [
             'data' => $data,
         ]);
     }
-*/
+
 }

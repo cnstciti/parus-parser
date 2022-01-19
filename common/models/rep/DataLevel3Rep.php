@@ -281,6 +281,21 @@ class DataLevel3Rep
         return [];
     }
 
+    public static function listLoadedObject() : array
+    {
+        return DataLevel3AR::find()
+            ->select(['id'])
+            ->where([
+                'status' => self::STATUS_LOADED,
+            ])
+            ->asArray()
+            ->all();
+    }
+
+
+
+
+    /*-------------------------*/
     public static function countFlatPublishedRent() : int
     {
         return DataLevel3AR::find()

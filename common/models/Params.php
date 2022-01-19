@@ -15,4 +15,9 @@ class Params
         return Yii::$app->params['parusApi'];
     }
 
+    public static function numGapsDelete() : int
+    {
+        return Yii::$app->params['numGapsDelete'];
+    }
+
 }

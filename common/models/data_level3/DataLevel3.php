@@ -12,6 +12,7 @@ use common\models\data_level3\exception\GeoException;
 use common\models\data_level3\exception\ProxyException;
 use DiDom\Document;
 use yii\helpers\Json;
+use common\models\Params;
 
 /**
  *  Финализация данных
@@ -892,6 +893,29 @@ class DataLevel3
 
         return $ret;
 */
+    }
+
+    /**
+     * Инициализирует парамеры удаления объектов
+     *
+     * @return array
+     */
+    public static function initDelete() : array
+    {
+        $listObject    = DataLevel3Rep::listLoadedObject(); // список ИД
+        $countObject   = count($listObject);                // кол-во в списке ИД
+        $numGapsDelete = Params::numGapsDelete();           // число промежутков
+        $countOneGap   = intval($countObject/$numGapsDelete);   // кол-во ИД на одном промежутке
+
+        $ret[0] = 0;
+        DelObjectRep::initRow(1, $ret[0]);  // обновляем запись с ид==1
+
+        for ($i=1; $i<$numGapsDelete; ++$i) {
+            $ret[$i] = intval($listObject[$i*$countOneGap]['id']);  // берем из списка ИД со сдвигом $countOneGap
+            DelObjectRep::initRow($i+1, $ret[$i]);              // обновляем запись с ид==$i+1
+        }
+
+        return $ret;
     }
 
 }
