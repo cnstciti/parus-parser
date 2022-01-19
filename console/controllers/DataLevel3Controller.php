@@ -10,21 +10,32 @@ use yii\console\Controller;
 class DataLevel3Controller extends Controller
 {
     /**
-     * Действие "Level3 - Обогащение данных"
-     *
-     * @return mixed
+     * Действие "Level3 - Запустить парсер"
      */
     public function actionParser()
     {
         $result = DataLevel3::parser();
         print_r($result);
-        //echo 'OK' . PHP_EOL;
     }
 
+    /**
+     * Действие "Level3 - Запустить удаление объекта"
+     *
+     * @param int $id - ИД записи в таблице
+     */
     public function actionDelete($id)
     {
         $result = DataLevel3::delete($id);
         print_r($result);
-        //echo 'OK' . PHP_EOL;
     }
+
+    /**
+     * Действие "Level3 - Запустить инициацию удаления объекта"
+     */
+    public function actionInitDelete()
+    {
+        $data = DataLevel3::initDelete();
+        print_r($data);
+    }
+
 }
