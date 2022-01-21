@@ -216,7 +216,8 @@ class DataLevel3Avito extends DataLevel3Base
 
     protected static function getMetroStation1(Document $doc) : string
     {
-        if ($stations = $doc->find('.item-address-georeferences-item__content')) {
+        $stations = $doc->find('.item-address-georeferences-item__content');
+        if (!is_null($stations[0])) {
             return $stations[0]->text();
         }
 
@@ -225,7 +226,8 @@ class DataLevel3Avito extends DataLevel3Base
 
     protected static function getMetroStation2(Document $doc) : string
     {
-        if ($stations = $doc->find('.item-address-georeferences-item__content')) {
+        $stations = $doc->find('.item-address-georeferences-item__content');
+        if (!is_null($stations[1])) {
             return $stations[1]->text();
         }
 
@@ -234,7 +236,8 @@ class DataLevel3Avito extends DataLevel3Base
 
     protected static function getMetroStation3(Document $doc) : string
     {
-        if ($stations = $doc->find('.item-address-georeferences-item__content')) {
+        $stations = $doc->find('.item-address-georeferences-item__content');
+        if (!is_null($stations[2])) {
             return $stations[2]->text();
         }
 
