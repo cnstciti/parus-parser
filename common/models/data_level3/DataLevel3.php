@@ -55,6 +55,9 @@ class DataLevel3
         $ret = [];
         try {
             $dataLevel2 = DataLevel2Rep::findByStatus(DataLevel2Rep::STATUS_LOADED);
+            if (is_null($dataLevel2)) {
+                throw new BaseException(self::MSG_ERROR_DATA, self::CODE_ERROR_DATA);
+            }
             $data       = self::_getPage($dataLevel2['url']);
             if ($data['error']['code']) {
                 throw new ProxyException(self::MSG_ERROR_DATA, self::CODE_ERROR_DATA);
