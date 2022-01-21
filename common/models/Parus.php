@@ -11,7 +11,7 @@ class Parus
         $apiURL = Params::parusApi() . '/client-rent/add-on';
         $params['id'] = $id;
         try {
-            Yii::info('id='.$id, $apiURL);
+            Yii::error('id='.$id, $apiURL);
             $response = (new HttpClient())->post(
                 $apiURL,
                 [
