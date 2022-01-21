@@ -27,7 +27,7 @@ class DataLevel2Rep
             ->one();
     }
 
-    public static function findByStatus(string $status) : array
+    public static function findByStatus(string $status) //: array
     {
         return DataLevel2AR::find()
             ->where(['status' => $status])

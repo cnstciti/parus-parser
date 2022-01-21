@@ -19,7 +19,7 @@ class DataLevel1Rep
             ->execute();
     }
 
-    public static function findOne() : array
+    public static function findOne()// : array
     {
         return DataLevel1AR::find()
             ->orderBy('createAt ASC')
