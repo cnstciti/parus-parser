@@ -47,18 +47,21 @@ abstract class DataLevel3Base
         try {
             $geo     = static::getGeo($doc);
             $polygon = self::_getPolygon($dataLevel2['type']);
+            $price   = static::getPrice($doc);
 
-            if ($polygon->isCrossesWith($geo['latitude'], $geo['longitude'])) {
+            if ($polygon->isCrossesWith($geo['latitude'], $geo['longitude']) && $price >= 10000) {
+                // если объект в нашей зоне обслуживания и стоимость >= 10 т.р.
                 DataLevel2Rep::updateStatus($dataLevel2['id'], DataLevel2Rep::STATUS_PROCESSED);
                 $status = DataLevel3Rep::STATUS_LOADED;
             } else {
+                // это не "наш" объект
                 DataLevel2Rep::updateStatus($dataLevel2['id'], DataLevel2Rep::STATUS_NOT_OUR_OBJECT);
                 $status = DataLevel3Rep::STATUS_NOT_OUR_OBJECT;
             }
 
             $dataLevel3 = DataLevel3Rep::findByUrl($dataLevel2['url']);
             if ($dataLevel3['status'] == DataLevel3Rep::STATUS_PUBLISHED) {
-                DataLevel3Rep::updatePrice($dataLevel3['id'], static::getPrice($doc), static::getDepositPrice($doc));
+                DataLevel3Rep::updatePrice($dataLevel3['id'], $price, static::getDepositPrice($doc));
             } else {
                 $insertData = [
                     'latitude'       => $geo['latitude'],
@@ -75,7 +78,7 @@ abstract class DataLevel3Base
                     'metroStation2'  => static::getMetroStation2($doc),
                     'metroStation3'  => static::getMetroStation3($doc),
                     'description'    => static::getDescription($doc),
-                    'price'          => static::getPrice($doc),
+                    'price'          => $price,
                     'depositPrice'   => static::getDepositPrice($doc),
                     'sellerName'     => static::getSellerName($doc),
                     'status'         => $status,
