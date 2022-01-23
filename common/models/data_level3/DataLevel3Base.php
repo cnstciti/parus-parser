@@ -46,8 +46,8 @@ abstract class DataLevel3Base
     {
         try {
             $geo     = static::getGeo($doc);
-            $polygon = self::_getPolygon($dataLevel2['type']);
             $price   = static::getPrice($doc);
+            $polygon = self::_getPolygon($dataLevel2['type']);
 
             if ($polygon->isCrossesWith($geo['latitude'], $geo['longitude']) && $price >= 10000) {
                 // если объект в нашей зоне обслуживания и стоимость >= 10 т.р.
@@ -88,71 +88,57 @@ abstract class DataLevel3Base
                     'site'           => $dataLevel2['site'],
                 ];
                 $dataLevel3Id = DataLevel3Rep::insert($insertData);
-                // только объекты со статусом "загружен" отправляем Клиентам аренды
                 if ($status == DataLevel3Rep::STATUS_LOADED) {
+                    // только объекты со статусом "загружен" отправляем Клиентам аренды
                     Parus::clientRentAddOn($dataLevel3Id);
                 }
-                /*
-        $clients = ClientRentRep::getList();
-
-        $tmp = [];
-        foreach ($clients as $client) {
-            $tmp[] = [
-                'id_client' => $client['id'],
-                'id_object' => $objectId,
-            ];
-        }
-
-        ClientRentObjectsRep::batchInsert($tmp);
-                 */
             }
+/*
+if ($polygon->isCrossesWith($geo['latitude'], $geo['longitude'])) {
+    //$status       = MyObjectAR::STATUS_LOADED;
+    //$type         = $dataResult['type'];
+    //$action       = $dataResult['action'];
+    //$site         = $dataResult['site'];
+    if ($object['status'] == MyObjectAR::STATUS_PUBLISHED) {
+        MyObjectRep::updatePrice($object['id'], $price, $depositPrice);
+    } else {
 
-            /*
-            if ($polygon->isCrossesWith($geo['latitude'], $geo['longitude'])) {
-                //$status       = MyObjectAR::STATUS_LOADED;
-                //$type         = $dataResult['type'];
-                //$action       = $dataResult['action'];
-                //$site         = $dataResult['site'];
-                if ($object['status'] == MyObjectAR::STATUS_PUBLISHED) {
-                    MyObjectRep::updatePrice($object['id'], $price, $depositPrice);
-                } else {
-
-                    MyObject::add($data);
-            */
-                    /*
-                    MyObjectRep::insert(
-                        $geo['latitude'],
-                        $geo['longitude'],
-                        $params['typeHouse'],
-                        //$myObject->typeLand = $ret['typeLand'];
-                        $params['floor'],
-                        $params['numberOfFloors'],
-                        //$myObject->myYearOfConstruction = $ret['yearOfConstruction'];
-                        $params['rooms'],
-                        $params['totalArea'],
-                        $params['kitchenArea'],
-                        $params['livingArea'],
-                        //$myObject->landArea = $ret['landArea'];
-                        //$myObject->myViewWindow = $ret['viewWindow'];
-                        //$myObject->myBalcony = $ret['balcony'];
-                        $address,
-                        //$myObject->metroStation1 = $ret['metroStation1'];
-                        //$myObject->metroStationColor1 = $ret['metroStationColor1'];
-                        //$myObject->metroStation2 = $ret['metroStation2'];
-                        //$myObject->metroStationColor2 = $ret['metroStationColor2'];
-                        //$myObject->metroStation3 = $ret['metroStation3'];
-                        //$myObject->metroStationColor3 = $ret['metroStationColor3'];
-                        $description,
-                        $price,
-                        $depositPrice,
-                        $sellerName,
-                        $status,
-                        $url,
-                        $type,
-                        $action,
-                        $site
-                    );
-                    */
+        MyObject::add($data);
+*/
+/*
+MyObjectRep::insert(
+    $geo['latitude'],
+    $geo['longitude'],
+    $params['typeHouse'],
+    //$myObject->typeLand = $ret['typeLand'];
+    $params['floor'],
+    $params['numberOfFloors'],
+    //$myObject->myYearOfConstruction = $ret['yearOfConstruction'];
+    $params['rooms'],
+    $params['totalArea'],
+    $params['kitchenArea'],
+    $params['livingArea'],
+    //$myObject->landArea = $ret['landArea'];
+    //$myObject->myViewWindow = $ret['viewWindow'];
+    //$myObject->myBalcony = $ret['balcony'];
+    $address,
+    //$myObject->metroStation1 = $ret['metroStation1'];
+    //$myObject->metroStationColor1 = $ret['metroStationColor1'];
+    //$myObject->metroStation2 = $ret['metroStation2'];
+    //$myObject->metroStationColor2 = $ret['metroStationColor2'];
+    //$myObject->metroStation3 = $ret['metroStation3'];
+    //$myObject->metroStationColor3 = $ret['metroStationColor3'];
+    $description,
+    $price,
+    $depositPrice,
+    $sellerName,
+    $status,
+    $url,
+    $type,
+    $action,
+    $site
+);
+*/
 /*
                 }
                 DataResultRep::updateStatus($dataResult['id'], DataResultAR::STATUS_PROCESSED);
