@@ -3,6 +3,7 @@ namespace common\models;
 
 use GuzzleHttp\Client as HttpClient;
 use Yii;
+use yii\helpers\Json;
 
 class Proxy
 {
@@ -63,7 +64,14 @@ class Proxy
             );
             $body = $response->getBody()->getContents();
         } catch (\Exception $e) {
-            $body = 'Error. Code=' . $e->getCode() . '(' . $e->getMessage() .')';
+            //$body = 'Error. Code=' . $e->getCode() . '(' . $e->getMessage() .')';
+            $body = [
+                'error' => [
+                    'code' => $e->getCode(),
+                    'description' => $e->getMessage(),
+                ],
+            ];
+            $body = Json::encode($body);
         }
 
         return $body;
