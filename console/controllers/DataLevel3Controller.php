@@ -14,7 +14,7 @@ class DataLevel3Controller extends Controller
      */
     public function actionParser()
     {
-        $result = DataLevel3::parser();
+        $result = DataLevel3::parser(true);
         print_r($result);
     }
 

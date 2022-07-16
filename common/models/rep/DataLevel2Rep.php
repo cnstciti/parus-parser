@@ -55,4 +55,11 @@ class DataLevel2Rep
         $row->save();
     }
 
+    public static function updateBlock(int $id, int $value) : void
+    {
+        $row = DataLevel2AR::findOne($id);
+        $row->block = $value;
+        $row->save();
+    }
+
 }

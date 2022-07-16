@@ -28,7 +28,7 @@ class DataLevel3Avito extends DataLevel3Base
 
     public static function getGeo(Document $doc) : array
     {
-        if (!$doc->first('div.b-search-map')) {
+        if (!$doc->first('.b-search-map')) {
             throw new GeoException(self::MSG_ERROR_MAP, self::CODE_ERROR_MAP);
         }
 
