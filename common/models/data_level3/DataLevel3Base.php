@@ -10,6 +10,7 @@ use common\models\PolygonFlat;
 use common\models\PolygonLand;
 use common\models\rep\DataLevel2Rep;
 use common\models\rep\DataLevel3Rep;
+use common\models\rep\DataLevel3LogRep;
 use common\models\Parus;
 
 /**
@@ -42,7 +43,7 @@ abstract class DataLevel3Base
     abstract protected static function getMetroStation3(Document $doc) : string;
 
 
-    final public static function parser(Document $doc, array $dataLevel2) : array
+    final public static function parser(Document $doc, array $dataLevel2, $isLog=false) : array
     {
         try {
             $geo     = static::getGeo($doc);
@@ -91,6 +92,15 @@ abstract class DataLevel3Base
                 if ($status == DataLevel3Rep::STATUS_LOADED) {
                     // только объекты со статусом "загружен" отправляем Клиентам аренды
                     Parus::clientRentAddOn($dataLevel3Id);
+                }
+                if ($isLog) {
+                    //$date = new \DateTime();
+                    DataLevel3LogRep::insert([
+                        'level2_id' => $dataLevel2['id'],
+                        'level3_id' => $dataLevel3Id,
+                        'url' => $dataLevel2['url'],
+                        //'createdAt' => $date->format('Y-m-d H:i:s'),
+                    ]);
                 }
             }
 /*
